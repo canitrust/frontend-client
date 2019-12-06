@@ -1,0 +1,13 @@
+server {
+  listen 80;
+  server_name localhost canitrust.in;
+  root /usr/share/nginx/html/build;
+  index index.html;
+  
+  access_log /var/log/nginx/canitrust.in.access.log;
+  error_log /var/log/nginx/canitrust.in.error.log;
+  
+  location / {
+        try_files $uri /index.html;
+    }
+}

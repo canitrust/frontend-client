@@ -1,0 +1,10 @@
+.more-btn{
+  border-radius: 0;
+  padding: 3px 12px;
+  margin-top: 10px;
+}
+.more-btn span{
+  margin-right: 10px;
+  top: 0;
+  font-size: 10px;
+}

@@ -1,0 +1,14 @@
+version: '2.1'
+services:
+  nginx:
+    container_name: canitrust-frontend-client
+    build:
+      context: .
+      dockerfile: local.Dockerfile
+      args:
+        REACT_APP_API_URL: 'http://localhost:9191'
+        REACT_APP_API_PREFIX: '/api/v1/'
+        REACT_APP_ENV_NODE: 'localhost'
+        INLINE_RUNTIME_CHUNK:
+    ports:
+    - "80:80"

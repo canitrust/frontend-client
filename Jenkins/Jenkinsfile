@@ -1,0 +1,71 @@
+node('Build') {
+  def repo = 'frontend-client'
+  stage('Checkout') {
+    def gitBranch = 'develop'
+    def gitUrl = env.CIT_GIT_FRONTEND_CLIENT_URL
+    def credentials = 'e7acb748-22b5-47e2-b5c8-f740048baac1'
+    git branch: gitBranch, credentialsId: credentials, url: gitUrl
+    echo "Checking out $repo form $gitUrl, branch $gitBranch"
+  }
+
+  env.BUILD_NUMBER_API = buildImageTagFromPackageJsonFile()
+  def artifactory = env.ARTIFACTORY_HOST
+  def urlArt = "https://${artifactory}"
+
+  def imagePath = env.ARTIFACTORY_PATH
+  def buildImageName = "cit-frontend-client"
+  def buildImageTag = "latest"
+  def imageName = "frontend-client"
+  def credential = '1c5d5f9a-db60-4799-9f6f-6d12750f5f7f'
+  def imageTag = env.BUILD_NUMBER_API
+
+  stage ('Clean docker images'){
+    sh "docker images --format '{{.Repository}}:{{.Tag}}' | grep 'frontend-client' | xargs --no-run-if-empty docker rmi --force"
+  }
+
+  stage('Build docker image - Stage 1') {
+    sh "docker build -f Dockerfile --label $buildImageName --build-arg REACT_APP_API_URL=${env.DEV_HOST}:${env.DEV_API_PORT} --build-arg REACT_APP_API_PREFIX=/api/v1/ -t $buildImageName:$buildImageTag ."
+  }
+
+  stage ('Run tests'){
+    sh "docker run $buildImageName:$buildImageTag npm run test:ci"
+  }
+
+  stage('Build docker image - Stage 2 & Push') {
+    sh "docker build -f local.Dockerfile --label $imageName -t $artifactory/$imagePath/$imageName:$imageTag ./"
+
+    withDockerRegistry(credentialsId: credential, url: urlArt) {
+      sh "docker push $artifactory/$imagePath/$imageName:$imageTag"
+    }
+  }
+
+
+  stage('Deploy to dev server') {
+    def sshUser = env.DEV_SSH_USER 
+
+    sshagent([sshUser]) {
+      // Clean up running containers
+      def script = """docker ps -f label=$imageName -q | xargs --no-run-if-empty docker stop
+            docker ps -a -f label=$imageName -q | xargs --no-run-if-empty docker rm
+            docker images -f label=$imageName -q | xargs --no-run-if-empty docker rmi --force
+      """
+      writeFile file: 'build.sh', text: "${script}"
+      sh "scp -oStrictHostKeyChecking=no build.sh ${sshUser}@${env.DEV_HOST}:"
+      sh "ssh -oStrictHostKeyChecking=no ${sshUser}@${env.DEV_HOST} bash build.sh"
+      sh "ssh -oStrictHostKeyChecking=no ${sshUser}@${env.DEV_HOST} rm build.sh"
+
+      // Deploy new containers
+      withDockerRegistry(credentialsId: credential, url: urlArt) {
+        sh returnStdout: true, script: "ssh -oStrictHostKeyChecking=no ${sshUser}@${env.DEV_HOST} docker pull $artifactory/$imagePath/$imageName:$imageTag"
+        sh returnStdout: true, script: "ssh -oStrictHostKeyChecking=no ${sshUser}@${env.DEV_HOST} docker run -d -p 80:80 $artifactory/$imagePath/$imageName:$imageTag"
+      }
+    }
+  }
+}
+
+String buildImageTagFromPackageJsonFile() {
+  def packageJson = readJSON file: './package.json'
+  def version = packageJson.version
+	def gitRev = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
+	return "dev-$version-$gitRev"
+}

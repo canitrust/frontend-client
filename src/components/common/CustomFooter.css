@@ -1,0 +1,10 @@
+@media only screen and (max-width: 415px) {
+    nav.navbar-bottom a.navbar-brand {
+        display: inline-block;
+        float: none;
+    }
+}
+nav.navbar-top {
+    border-top-left-radius: initial;
+    border-top-right-radius: initial;
+}

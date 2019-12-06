@@ -1,0 +1,7 @@
+.idea/
+node_modules/
+build/
+__snapshots__/
+.env*
+**/.DS_Store
+coverage/

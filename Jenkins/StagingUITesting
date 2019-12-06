@@ -1,0 +1,28 @@
+node('Develop') {
+    cleanWs()
+    def repo = 'frontend-client'
+    try {
+        stage('Checkout') {
+            def gitBranch = 'develop'
+            def gitLabUrl = "${env.CIT_GIT_FRONTEND_CLIENT_URL}"
+            def credentials = 'e7acb748-22b5-47e2-b5c8-f740048baac1'
+            git branch: gitBranch, credentialsId: credentials, url: gitLabUrl
+            echo "Checking out $repo form $gitLabUrl, branch $gitBranch"
+        }
+        echo 'Checkout was successful'
+        stage('UI Test') {
+            
+            sh "docker run -t -v \$PWD/e2e:/e2e -w /e2e -e CYPRESS_CIT_URL=${env.CIT_STAGING_UI_URL} -e CYPRESS_CIT_API_URL=${env.CIT_STAGING_API_URL} cypress/included:3.6.1 --browser chrome"
+            
+        }
+    } catch (e) {
+        echo 'FAILED'
+        throw e
+    } finally {
+        def currentResult = currentBuild.result ?: 'SUCCESS'
+        if (currentResult == 'SUCCESS') {
+            echo "SUCCESS"
+        }
+        
+    }
+}

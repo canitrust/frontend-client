@@ -1,0 +1,48 @@
+.stylish-input-group .input-group-addon{
+    background: white !important; 
+}
+.stylish-input-group .form-control{
+	border-right:0; 
+	box-shadow:0 0 0; 
+	border-color:#ccc;
+}
+.stylish-input-group button{
+    border:0;
+    background:transparent;
+}
+.panel-default{
+    padding: 5%;
+    background-color: #F5F5F5;
+}
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+.setting{
+    height: 34px;
+}
+.setting{
+    height: 34px;
+}
+.rowClass{
+    color: red;
+}
+
+.brand{
+    color: #e20f00;
+    font-size: 27pt;
+    font-weight: bold;
+}
+
+.nav{ 
+    font-size: 14pt;
+}
+
+.navbar-nav span[role=button] {
+    padding: 15px;
+    display: inline-block;
+    line-height: 20px;
+}
+
+.focus-no-outline:focus { outline: none}

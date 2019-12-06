@@ -1,0 +1,91 @@
+.ans-0 {
+    background-color: #cf1d1d;
+}
+
+.ans-1 {
+    background-color: #1e7c30;
+}
+.ans-2 {
+    background-color: #56c5c7;
+}
+
+.ans-3 {
+    background-color: #9185df;
+}
+
+.ans-4 {
+    background-color: #3e73f0;
+}
+
+.ans-5 {
+    background-color: #020091;
+}
+
+.ans-6 {
+    background-color: #f3cf20;
+}
+
+.ans-7 {
+    background-color: #e66f0e;
+}
+
+.ans-8 {
+    background-color: #cc64b2;
+}
+
+.ans-9 {
+    background-color: #eeb3d1;
+}
+
+.ans-10 {
+    background-color: #b2bd3d;
+}
+
+.ans-default {
+    background-color: #cacaca;
+}
+
+table sup {
+    font-size: 60%;
+}
+
+table.testresult-table {
+    border-collapse: separate;
+}
+
+table.testresult-table>thead>tr>th {
+    font-size: 14pt;
+    vertical-align: middle;
+    text-align: center;
+    word-break: break-word;
+}
+
+table.testresult-table td {
+    font-weight: bold;
+    text-align: center;
+    font-size: 14pt;
+    color: #fafafa;
+    border: 3px solid #fafafa;
+}
+table.testresult-table td.answer {
+    color: black;
+    font-weight: normal;
+    text-align: left;
+}
+li.active{
+    font-size: 17pt;
+    font-weight: bold;
+}
+table.testresult-table tr.latest {
+    outline: 6px solid #584E3B;
+}
+table.testresult-table tr.latest td {
+    border: 4px solid #584E3B;
+}
+@media only screen and (max-width: 415px) {
+    table.testresult-table>thead>tr>th {
+        font-size: 4vw;
+        padding: 8px 0;
+        text-align: center;
+    }
+}
