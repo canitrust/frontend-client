@@ -3,11 +3,10 @@ node('Develop') {
     def repo = 'frontend-client'
     try {
         stage('Checkout') {
-            def gitBranch = 'develop'
-            def gitLabUrl = "${env.CIT_GIT_FRONTEND_CLIENT_URL}"
-            def credentials = 'e7acb748-22b5-47e2-b5c8-f740048baac1'
-            git branch: gitBranch, credentialsId: credentials, url: gitLabUrl
-            echo "Checking out $repo form $gitLabUrl, branch $gitBranch"
+            def gitBranch = 'master'
+            def gitUrl = "${env.CIT_GIT_FRONTEND_CLIENT_URL}"
+            git branch: gitBranch, url: gitUrl
+            echo "Checking out $repo form $gitUrl, branch $gitBranch"
         }
         echo 'Checkout was successful'
         stage('UI Test') {
