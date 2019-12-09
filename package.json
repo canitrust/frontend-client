@@ -1,7 +1,9 @@
 {
-  "name": "canitrust-frontend",
+  "name": "canitrust-frontend-client",
   "version": "1.5.2",
-  "private": true,
+  "description": "The react client for the CanITrust.in frontend. Find out more at canitrust.in",
+  "license": "AGPL-3.0",
+  "repository": "github:canitrust/frontend-client",
   "scripts": {
     "build": "node scripts/build.js",
     "lint": "eslint './src/**/*.js'",
