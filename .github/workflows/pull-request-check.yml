@@ -17,14 +17,14 @@ jobs:
           fetch-depth: 1
       - uses: actions/setup-node@v1
         with:
-          node-version: "12.x"
+          node-version: '12.x'
       - run: npm install
       - name: linter
         run: npm run lint
       - name: dependency-check
         run: npm audit
       - name: tests
-        run: npm test
+        run: npm run test:ci
   docker:
     name: Docker build
     runs-on: ubuntu-18.04
