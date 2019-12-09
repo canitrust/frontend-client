@@ -21,8 +21,7 @@ node ('Build'){
   stage('Checkout'){
     def gitBranch = "release/${params.TAG}"
     def gitUrl = env.CIT_GIT_FRONTEND_CLIENT_URL
-    def credentials = 'e7acb748-22b5-47e2-b5c8-f740048baac1'
-    git branch: gitBranch, credentialsId: credentials, url: gitUrl
+    git branch: gitBranch, url: gitUrl
     echo "Checking out ${repo} form ${gitUrl}, branch ${gitBranch}"
   }
 
