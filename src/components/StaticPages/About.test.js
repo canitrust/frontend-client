@@ -21,7 +21,9 @@ describe('About with defined props', () => {
     const staticpage = wrapper.find('StaticPage');
     expect(staticpage).toHaveLength(1);
     expect(staticpage.props().page).toEqual('about');
-    expect(staticpage.props().localContent).toEqual('ABOUT PAGE');
+    expect(staticpage.props().localContent).toEqual(
+      'Cross-browser testing is provided by Browserstack free of charge. Special thanks to Browserstack for supporting CanITrust.'
+    );
     expect(staticpage.props().env).toEqual(Env.Node);
   });
 });
