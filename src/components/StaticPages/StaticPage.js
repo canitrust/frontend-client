@@ -37,6 +37,12 @@ export default class StaticPage extends React.Component {
 
   render() {
     const { data } = this.state;
-    return <div>{renderHTML(data)}</div>;
+    const { localContent } = this.props;
+    return (
+      <div>
+        <p style={{ textAlign: 'center' }} localContent={localContent} />
+        {renderHTML(data)}
+      </div>
+    );
   }
 }
