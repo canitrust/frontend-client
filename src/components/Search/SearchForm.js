@@ -24,7 +24,7 @@ class SearchForm extends React.Component {
     super(props);
     this.state = {
       keyword: '',
-      searchDone: false,
+      searchDone: true,
       isLoading: false,
       error: false,
     };
