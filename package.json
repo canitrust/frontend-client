@@ -6,7 +6,7 @@
   "repository": "github:canitrust/frontend-client",
   "scripts": {
     "build": "node scripts/build.js",
-    "lint": "eslint './src/**/*.js'",
+    "lint": "eslint ./src/**/*.js",
     "start": "node scripts/start.js",
     "test": "node scripts/test.js --verbose --watchAll",
     "test:ci": "CI=true node scripts/test.js"
