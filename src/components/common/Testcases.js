@@ -33,7 +33,7 @@ class Testcases extends React.Component {
   render() {
     const { testcases } = this.props;
 
-    const data = testcases.map((i) => <Testcase key={i.testNumber} {...i} />);
+    const data = testcases.map((i) => <Testcase key={i.path} {...i} />);
     return <div>{data}</div>;
   }
 }
