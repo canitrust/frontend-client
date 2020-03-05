@@ -15,7 +15,7 @@ import Tags from './Tags';
  */
 export default ({ title, tags, description, path }) => (
   <div className="panel panel-default rounded-0 result">
-    <Link rel="canonical" to={`/${path}`} className="link">
+    <Link to={`/${path}`} className="link">
       <h2>{title}</h2>
       <p className="break-word">{description}</p>
     </Link>

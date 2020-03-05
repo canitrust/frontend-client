@@ -4,6 +4,7 @@
  * ------------------------------------------------------------------------------------------------*/
 
 import React, { Component } from 'react';
+import { Helmet } from 'react-helmet';
 import Env from '../../configuration';
 import NotFoundErrorPage from '../common/NotFoundErrorPage';
 import LoadingSpinner from '../common/LoadingSpinner';
@@ -58,9 +59,16 @@ export default class DetailView extends Component {
       testResults,
       possibleAnswers,
       question,
+      path,
     } = response;
+
+    const canonicalPath = `https://www.canitrust.in/${path}`;
+
     return (
       <div className="panel panel-default rounded-0 result">
+        <Helmet>
+          <link rel="canonical" href={canonicalPath} />
+        </Helmet>
         <div className="testcase-info">
           <DetailTestcase
             title={title}
