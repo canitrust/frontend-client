@@ -1,0 +1,9 @@
+.about-page .center{
+	text-align: center;
+}
+.about-page .logo-link{
+	display: inline-block;
+}
+.about-page .logo{
+	height: 37px
+}
