@@ -14,7 +14,7 @@ export default () => {
   const localContent = 'ABOUT PAGE';
   const env = Env.Node;
   return (
-    <div>
+    <div className="about-page">
       <StaticPage page={page} localContent={localContent} env={env} />
       <h2>Cross-browser testing</h2>
       <hr />

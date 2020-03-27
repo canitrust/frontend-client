@@ -1,9 +1,9 @@
-.center{
+.about-page .center{
 	text-align: center;
 }
-.logo-link{
+.about-page .logo-link{
 	display: inline-block;
 }
-.logo{
+.about-page .logo{
 	height: 37px
 }
