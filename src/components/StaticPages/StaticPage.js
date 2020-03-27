@@ -20,7 +20,7 @@ export default class StaticPage extends React.Component {
       this.fetchAPI(page);
     } else {
       this.setState({
-        data: `<div className="text-center""> ******* ${localContent} ********</div>`,
+        data: `<div className="text-center"> ******* ${localContent} ********</div>`,
       });
     }
   }
