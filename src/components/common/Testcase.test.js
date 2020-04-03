@@ -24,6 +24,7 @@ const THE_TESTCASE = {
   ],
   description: 'TEST DESCRIPTION',
   testNumber: 99,
+  path: 'test-description',
 };
 
 Enzyme.configure({ adapter: new Adapter() });
@@ -35,7 +36,7 @@ describe('Testcase with defined props', () => {
   });
   test('check if Testcase is rendered correctly with link, CSS and if it assigns props to Tags correctly', () => {
     expect(wrapper.find('Link').props().className).toEqual('link');
-    expect(wrapper.find('Link').props().to).toEqual('/detail/99');
+    expect(wrapper.find('Link').props().to).toEqual('/test-description');
     expect(wrapper.find('h2').text()).toContain('TEST TITLE');
     expect(wrapper.find('p').text()).toContain('TEST DESCRIPTION');
     expect(wrapper.find('_default').props().tags).toEqual(THE_TESTCASE.tags);
