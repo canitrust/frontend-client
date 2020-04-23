@@ -43,7 +43,10 @@ class SearchForm extends React.Component {
       location.pathname === '/search'
     ) {
       // handle event
-      const { keyword } = this.props;
+      const { keyword } = this.state;
+      if (keyword === '') {
+        this.setState({ keyword: prevProps.keyword });
+      }
       if (keyword) {
         this.setState({ keyword, searchDone: true });
       }
