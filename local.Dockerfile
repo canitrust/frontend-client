@@ -1,4 +1,4 @@
-FROM cit-frontend-client:latest as builder
+FROM docker.pkg.github.com/canitrust/frontend-client/frontend-client:devel as builder
 ARG REACT_APP_API_URL
 ARG REACT_APP_API_PREFIX
 ARG REACT_APP_ENV_NODE
