@@ -50,7 +50,14 @@ export default class App extends React.Component {
             <Route
               exact
               path="/search"
-              render={(props) => <SearchResult {...props} result={result} />}
+              render={(props) => (
+                <SearchResult
+                  {...props}
+                  result={result}
+                  keyword={keyword}
+                  setSearchState={this.setSearchState}
+                />
+              )}
             />
             <Route exact path="/about" component={About} />
             <Route exact path="/impress" component={Impress} />
