@@ -13,9 +13,9 @@ import Tags from './Tags';
  * @param {Object} testcase
  * @return {Component} <Testcase/>
  */
-export default ({ title, tags, description, testNumber }) => (
+export default ({ title, tags, description, path }) => (
   <div className="panel panel-default rounded-0 result">
-    <Link to={`/detail/${testNumber}`} className="link">
+    <Link to={`/${path}`} className="link">
       <h2>{title}</h2>
       <p className="break-word">{description}</p>
     </Link>

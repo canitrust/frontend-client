@@ -17,7 +17,7 @@ describe('About with defined props', () => {
     wrapper = shallow(<About />);
   });
   test('Check if About component renders and passs props to StaticPage correctly', () => {
-    expect(wrapper.find('div')).toHaveLength(1);
+    expect(wrapper.find('div')).toHaveLength(2);
     const staticpage = wrapper.find('StaticPage');
     expect(staticpage).toHaveLength(1);
     expect(staticpage.props().page).toEqual('about');
