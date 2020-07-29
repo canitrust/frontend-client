@@ -68,11 +68,22 @@ export default class CanitrustinSomething extends Component {
 
   render() {
     const state = { ...this.state };
+    const { location } = this.props;
     if (state.isLoading) return <LoadingSpinner />;
 
     if (state.error) return <NotFoundErrorPage />;
 
     if (state.isTag) return <TagPage {...state} />;
-    return <DetailedView testNumber={state.testNumber} />;
+    return (
+      <DetailedView
+        testNumber={state.testNumber}
+        path={state.path}
+        hashId={
+          location.hash
+            ? location.hash.substring(1, location.hash.length)
+            : undefined
+        }
+      />
+    );
   }
 }

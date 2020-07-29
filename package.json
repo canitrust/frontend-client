@@ -138,6 +138,7 @@
     "react-markdown": "^4.2.2",
     "react-render-html": "^0.6.0",
     "react-router-dom": "^5.1.2",
+    "react-router-hash-link": "^2.0.0",
     "react-test-renderer": "^16.13.1",
     "resolve": "1.10.0",
     "sass-loader": "7.1.0",

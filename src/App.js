@@ -63,6 +63,11 @@ export default class App extends React.Component {
             <Route exact path="/impress" component={Impress} />
             <Route exact path="/contribute" component={Contribute} />
             <Route exact path="/detail/:id" component={DetailView} />
+            <Route
+              exact
+              path="/detail/:id/:variationId"
+              component={DetailView}
+            />
             <Route exact path="/tag/:tagName" component={TagPage} />
             {/* path can be tagName or path of a testcase */}
             <Route exact path="/:path" component={CanitrustinSomething} />

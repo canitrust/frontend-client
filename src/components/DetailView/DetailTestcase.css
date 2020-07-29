@@ -4,3 +4,28 @@ p{
 h2{
     font-weight: bold;
 }
+.variation-wrapper {
+    color: black;
+}
+.variation-wrapper h5 {
+    margin: 0px;
+}
+.variation-wrapper {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    display: block;
+    margin-bottom: 2px;
+    padding: 10px 20px;
+    margin-top: 10px;
+}
+.variation-wrapper:hover, .variation-wrapper:focus {
+    border-color: #5ac3ff;
+    cursor: pointer;
+    color: black;
+    text-decoration: none;
+}
+.variation-wrapper.active {
+    border-color: #b8daff;
+    box-shadow: 0 0 8px #23adff;
+}
