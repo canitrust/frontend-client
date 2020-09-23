@@ -1,3 +1,7 @@
+img {
+  max-width: 100%;
+}
+
 .App {
   text-align: center;
 }
@@ -20,6 +24,10 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.testcase-info img {
+  margin-bottom: 15px;
 }
 
 @keyframes App-logo-spin {
