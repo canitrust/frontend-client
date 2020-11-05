@@ -12,7 +12,13 @@ Enzyme.configure({ adapter: new Adapter() });
 
 describe('The DetailTable Rows component', () => {
   const render = (props) => {
-    return mount(<DetailTableRows {...props} />);
+    return mount(
+      <table>
+        <tbody>
+          <DetailTableRows {...props} />
+        </tbody>
+      </table>
+    );
   };
 
   test('should rendered correctly', () => {
