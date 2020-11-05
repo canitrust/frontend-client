@@ -9,7 +9,14 @@ export default ({ browsers }) => (
   <tr>
     {browsers.map((browser) => (
       <th key={browser} width={`${100 / browsers.length}%`}>
-        {browser}
+        {browser.includes(' ') ? (
+          <span>
+            {browser.split(' ')[0]}
+            <p className="mobile-browser">{browser.split(' ')[1]}</p>
+          </span>
+        ) : (
+          browser
+        )}
       </th>
     ))}
   </tr>

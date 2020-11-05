@@ -27,6 +27,7 @@ export default class DetailView extends Component {
     super(props);
     this.state = {
       testcasePath: props.path,
+      variationId: undefined,
       isLoading: true,
       error: false,
     };
@@ -54,14 +55,23 @@ export default class DetailView extends Component {
   handle = () => {
     const { match, testNumber, hashId } = this.props;
     const testcaseId = testNumber || match.params.id;
-    const variationId = match ? match.params.variationId : hashId || undefined;
+    let variationId = match ? match.params.variationId : hashId || undefined;
+    if (variationId) variationId = parseInt(variationId, 10);
     fetch(getTestcaseAPIEndpoint(testcaseId, variationId))
       .then(HandleErrors)
       .then((res) => {
         if (res) {
+          if (
+            !variationId &&
+            'variations' in res &&
+            res.variations &&
+            res.variations.length > 0
+          )
+            variationId = res.variations[0].id;
           return this.setState({
             error: false,
             isLoading: false,
+            variationId,
             response: res,
           });
         }
@@ -71,7 +81,13 @@ export default class DetailView extends Component {
   };
 
   render() {
-    const { isLoading, error, response, testcasePath } = this.state;
+    const {
+      isLoading,
+      error,
+      response,
+      testcasePath,
+      variationId,
+    } = this.state;
 
     if (isLoading) return <LoadingSpinner />;
 
@@ -90,6 +106,7 @@ export default class DetailView extends Component {
       variations,
       variation,
       variationOverview,
+      mobileResults,
     } = response;
     const canonicalPath = `https://www.canitrust.in/${path}`;
 
@@ -104,20 +121,25 @@ export default class DetailView extends Component {
             description={description}
             detailedDescription={detailedDescription}
           />
-          <hr />
           {variations && variations.length && (
-            <VariationTestcase
-              variations={variations}
-              variationOverview={variationOverview}
-              variationId={variation ? variation.id : undefined}
-              testcaseId={testNumber}
-              path={testcasePath}
-            />
+            <div>
+              <hr />
+              <VariationTestcase
+                variations={variations}
+                variationOverview={variationOverview}
+                variationId={variationId}
+                testcaseId={testNumber}
+                path={testcasePath}
+              />
+            </div>
           )}
           <hr />
           <Tags tags={tags} />
           <hr />
-          <DetailTable testResults={testResults || variation.testResults} />
+          <DetailTable
+            testResults={testResults || variation.testResults}
+            mobileResults={mobileResults}
+          />
           <hr />
         </div>
         <DetailLegends possibleAnswers={possibleAnswers} question={question} />

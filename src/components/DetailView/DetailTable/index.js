@@ -27,7 +27,23 @@ const isContinuousVersion = (a, b) => {
   return false;
 };
 
-export default ({ testResults }) => {
+// Classify testresults by browser's name
+const classifyTestresults = (testResults, browsers, groupedTestResults) => {
+  const groupedTestResultsTmp = groupedTestResults;
+  testResults.forEach((testResult) => {
+    const browserName = `${testResult.browser}${
+      'real_mobile' in testResult && testResult.real_mobile
+        ? ` ${testResult.platform}`
+        : ''
+    }`;
+    browsers.add(browserName);
+    if (!groupedTestResultsTmp[browserName])
+      groupedTestResultsTmp[browserName] = [];
+    groupedTestResultsTmp[browserName].push(testResult);
+  });
+};
+
+export default ({ testResults, mobileResults }) => {
   if (!testResults || testResults.length === 0) {
     return null;
   }
@@ -37,12 +53,10 @@ export default ({ testResults }) => {
   let largestStableIndex = 0;
 
   // Classify testresults by browser's name
-  testResults.forEach((testResult) => {
-    browsers.add(testResult.browser);
-    if (!groupedTestResults[testResult.browser])
-      groupedTestResults[testResult.browser] = [];
-    groupedTestResults[testResult.browser].push(testResult);
-  });
+  classifyTestresults(testResults, browsers, groupedTestResults);
+  if (mobileResults && mobileResults.length !== 0) {
+    classifyTestresults(mobileResults, browsers, groupedTestResults);
+  }
 
   // Sort the browsers in alphabetical
   const sortedBrowsers = Array.from(browsers).sort();
