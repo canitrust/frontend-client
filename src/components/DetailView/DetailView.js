@@ -104,9 +104,7 @@ export default class DetailView extends Component {
       question,
       path,
       variations,
-      variation,
       variationOverview,
-      mobileResults,
     } = response;
     const canonicalPath = `https://www.canitrust.in/${path}`;
 
@@ -136,10 +134,7 @@ export default class DetailView extends Component {
           <hr />
           <Tags tags={tags} />
           <hr />
-          <DetailTable
-            testResults={testResults || variation.testResults}
-            mobileResults={mobileResults}
-          />
+          <DetailTable testResults={testResults} />
           <hr />
         </div>
         <DetailLegends possibleAnswers={possibleAnswers} question={question} />

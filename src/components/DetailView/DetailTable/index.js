@@ -43,7 +43,7 @@ const classifyTestresults = (testResults, browsers, groupedTestResults) => {
   });
 };
 
-export default ({ testResults, mobileResults }) => {
+export default ({ testResults }) => {
   if (!testResults || testResults.length === 0) {
     return null;
   }
@@ -54,9 +54,6 @@ export default ({ testResults, mobileResults }) => {
 
   // Classify testresults by browser's name
   classifyTestresults(testResults, browsers, groupedTestResults);
-  if (mobileResults && mobileResults.length !== 0) {
-    classifyTestresults(mobileResults, browsers, groupedTestResults);
-  }
 
   // Sort the browsers in alphabetical
   const sortedBrowsers = Array.from(browsers).sort();
