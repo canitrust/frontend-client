@@ -53,6 +53,13 @@ table.testresult-table {
     border-collapse: separate;
 }
 
+table.testresult-table .mobile-browser {
+    line-height: 13pt;
+    margin: 0;
+    font-size: 13pt;
+    font-weight: normal;
+}
+
 table.testresult-table>thead>tr>th {
     font-size: 14pt;
     vertical-align: middle;
