@@ -42,23 +42,14 @@ describe('DetailView', function () {
         // Check the result
         cy.get('table.testresult-table')
         .find('th')
-        .should(($th) => {
-            // should have found 5 elements
-            expect($th).to.have.length(5)
-            expect($th[0]).to.contain('Chrome')
-            expect($th[1]).to.contain('Edge')
-            expect($th[2]).to.contain('Firefox')
-            expect($th[3]).to.contain('Ie')
-            expect($th[4]).to.contain('Safari')
+        .each(($el) => {
+            const text = $el.text()
+            expect($el.text()).to.match(/^(Chrome(android)?|Edge|Firefox|Ie|Safari(ios)?)$/)
         })
         //check latest field
         cy.get('table.testresult-table')
         .find('tr.latest')
         .find('td')
-        .should(($td) => {
-            // should have found 5 elements
-            expect($td).to.have.length(5)
-            })
         .each(($el) => {
             expect($el).not.to.be.empty
         })
