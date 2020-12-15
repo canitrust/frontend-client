@@ -75,9 +75,17 @@ export default ({ testResults }) => {
       sortedGroupedNonBetaTestResults.length - 1
     ].isStable = true;
 
-    // Beta versions after normal versions
+    // Beta versions are after stable versions
+    // Filter out beta versions which are older than the latest stable version
     const sortedGroupedBetaTestResults = groupedTestResults[browser]
-      .filter((a) => a.isBeta)
+      .filter(
+        (a) =>
+          a.isBeta &&
+          a.browserVer >
+            sortedGroupedNonBetaTestResults[
+              sortedGroupedNonBetaTestResults.length - 1
+            ].browserVer
+      )
       .sort((a, b) => a.browserVer - b.browserVer);
 
     // Bring the results back together
