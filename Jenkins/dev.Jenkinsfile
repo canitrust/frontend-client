@@ -2,7 +2,7 @@ node('cit-dev') {
   cleanWs()
   def repo = 'frontend-client'
   stage('Checkout') {
-    def gitBranch = 'codeql-int'
+    def gitBranch = 'develop'
     def gitUrl = env.CIT_GIT_FRONTEND_CLIENT_URL
     git branch: gitBranch, url: gitUrl
     echo "Checking out $repo form $gitUrl, branch $gitBranch"
