@@ -37,7 +37,7 @@ node ('Build'){
   }
 
   stage ('Clean docker images'){
-    def returnVal = sh "docker images --format '{{.Repository}}:{{.Tag}}' | grep 'frontend-client' | xargs --no-run-if-empty docker rmi --force"
+    sh "docker images --format '{{.Repository}}:{{.Tag}}' | grep 'frontend-client' | xargs --no-run-if-empty docker rmi --force"
   }
 
   stage ('Pull AWS-CLI Image'){
