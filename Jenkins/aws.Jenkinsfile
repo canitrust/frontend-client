@@ -25,6 +25,17 @@ node ('Build'){
     echo "Checking out ${repo} form ${gitUrl}, branch ${gitBranch}"
   }
 
+  stage ('CodeQL Analysis'){
+    sh "docker run --rm --name codeql-container -v \$(pwd):/src -e CODEQL_LANGUAGE=javascript -e CODEQL_QUERIES=javascript/ql/src/codeql-suites/javascript-lgtm-full.qls -e CODEQL_THREADS=3 codeql-int:latest"
+  }
+
+  stage ('Semgrep Analysis'){
+    sh "docker run --rm -v \${PWD}:/src returntocorp/semgrep --config=p/r2c-ci /src --junit-xml -o /src/semgrep-junit-report.xml"
+    def summary = junit allowEmptyResults: true, testResults: 'output/semgrep-junit-report.xml'
+    echo "Test Summary"
+    echo "Total: ${summary.totalCount}, Failures: ${summary.failCount}, Successes: ${summary.passCount}"
+  }
+
   stage ('Clean docker images'){
     sh "docker images --format '{{.Repository}}:{{.Tag}}' | grep 'frontend-client' | xargs --no-run-if-empty docker rmi --force"
   }
