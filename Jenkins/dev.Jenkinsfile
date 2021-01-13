@@ -2,10 +2,33 @@ node('cit-dev') {
   cleanWs()
   def repo = 'frontend-client'
   stage('Checkout') {
-    def gitBranch = 'develop'
+    def gitBranch = 'codeql-int'
     def gitUrl = env.CIT_GIT_FRONTEND_CLIENT_URL
     git branch: gitBranch, url: gitUrl
     echo "Checking out $repo form $gitUrl, branch $gitBranch"
+  }
+
+  def artifactory = env.GITHUB_PACKAGE_DOCKER_URL
+  def urlArt = "https://${artifactory}"
+  def imagePath = "canitrust/frontend-client"
+  def imageName = "frontend-client"
+  def imageTag = "devel"
+  def credential = "github-citbot-token"
+  def imageNginxName = "frontend-client-nginx"
+  stage ("Clean") {
+    sh "docker images --format '{{.Repository}}:{{.Tag}}' | grep 'frontend-client' | xargs --no-run-if-empty docker rmi --force"
+  }
+  stage ("Pull") {
+    withDockerRegistry(credentialsId: credential, url: urlArt) {   
+      sh "docker pull $artifactory/$imagePath/$imageName:$imageTag"
+    }
+  }
+  stage ('Test') {
+    sh "docker run $artifactory/$imagePath/$imageName:$imageTag npm run test:ci"
+  }
+
+  stage ('Build Nginx') {
+    sh "docker build -f Jenkins/dev.Dockerfile --label $imageNginxName -t $imageNginxName --build-arg REACT_APP_API_URL=${env.DEV_HOST}:${env.DEV_API_PORT} --build-arg REACT_APP_API_PREFIX=/api/v1/ ./"
   }
 
   stage ('CodeQL Analysis'){
@@ -38,29 +61,6 @@ node('cit-dev') {
               sh "$run_atlas_docker"
           }
       }
-  }
-
-  def artifactory = env.GITHUB_PACKAGE_DOCKER_URL
-  def urlArt = "https://${artifactory}"
-  def imagePath = "canitrust/frontend-client"
-  def imageName = "frontend-client"
-  def imageTag = "devel"
-  def credential = "github-citbot-token"
-  def imageNginxName = "frontend-client-nginx"
-  stage ("Clean") {
-    sh "docker images --format '{{.Repository}}:{{.Tag}}' | grep 'frontend-client' | xargs --no-run-if-empty docker rmi --force"
-  }
-  stage ("Pull") {
-    withDockerRegistry(credentialsId: credential, url: urlArt) {   
-      sh "docker pull $artifactory/$imagePath/$imageName:$imageTag"
-    }
-  }
-  stage ('Test') {
-    sh "docker run $artifactory/$imagePath/$imageName:$imageTag npm run test:ci"
-  }
-
-  stage ('Build Nginx') {
-    sh "docker build -f local.Dockerfile --label $imageNginxName -t $imageNginxName --build-arg REACT_APP_API_URL=${env.DEV_HOST}:${env.DEV_API_PORT} --build-arg REACT_APP_API_PREFIX=/api/v1/ ./"
   }
 
   stage ('Run') {
