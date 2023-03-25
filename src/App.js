@@ -12,6 +12,7 @@ import CustomNavbar from './components/common/CustomNavbar';
 import CustomFooter from './components/common/CustomFooter';
 import Impress from './components/StaticPages/Impress';
 import Contribute from './components/StaticPages/Contribute';
+import PrivacyPolicy from './components/StaticPages/Privacy';
 import SearchForm from './components/Search/SearchForm';
 import Home from './components/Home/Home';
 import SearchResult from './components/Search/SearchResult';
@@ -62,6 +63,7 @@ export default class App extends React.Component {
             <Route exact path="/about" component={About} />
             <Route exact path="/impress" component={Impress} />
             <Route exact path="/contribute" component={Contribute} />
+            <Route exact path="/privacy-policy" component={PrivacyPolicy} />
             <Route exact path="/detail/:id" component={DetailView} />
             <Route
               exact
