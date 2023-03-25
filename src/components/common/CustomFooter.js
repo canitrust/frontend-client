@@ -30,6 +30,9 @@ export default () => (
         <NavItem componentClass="span">
           <Link to="/contribute">Contribute</Link>
         </NavItem>
+        <NavItem componentClass="span">
+          <Link to="/privacy-policy">Privacy Policy</Link>
+        </NavItem>
       </Nav>
     </Navbar.Collapse>
   </Navbar>
